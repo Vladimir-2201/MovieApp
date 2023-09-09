@@ -24,7 +24,9 @@
 </form>
 <table class="table">
     <thead>
-        <tr>
+        <tr class="text-center align-middle">
+            <th>
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Movies![0].Title)
             </th>
@@ -45,7 +47,12 @@
     </thead>
     <tbody>
 @foreach (var item in Model.Movies!) {
-        <tr>
+            <tr class="text-center align-middle">
+            <td class="col-3">
+                <figure class="figure">
+                    <img src="@Html.DisplayFor(modelItem => item.Image)" class="figure-img img-fluid">
+                </figure>
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>

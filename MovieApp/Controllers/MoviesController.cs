@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Formats.Tar;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Reflection;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using MovieApp.Data;
 using MovieApp.Models;
 
@@ -13,10 +19,12 @@ namespace MovieApp.Controllers
     public class MoviesController : Controller
     {
         private readonly MovieAppContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MoviesController(MovieAppContext context)
+        public MoviesController(MovieAppContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Movies
@@ -81,7 +89,6 @@ namespace MovieApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
                 return View(movie);
         }
 
@@ -106,11 +113,25 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating")] Movie movie)
+        public async Task<IActionResult> Edit(int id, IFormFile image, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image")] Movie movie)
         {
             if (id != movie.Id)
             {
                 return NotFound();
+            }
+
+            if (image != null)
+            {
+                // путь к папке Files
+                string path = "image/" + movie.Title!.Replace(" ", "") + "Cover";
+                string extension = Path.GetExtension(image.FileName);
+
+                // сохраняем файл в папку Files в каталоге wwwroot
+                using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + "/" + path + extension, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                    movie.Image = (path + extension);
+                }
             }
 
             if (ModelState.IsValid)
