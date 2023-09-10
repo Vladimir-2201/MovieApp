@@ -83,7 +83,7 @@ namespace MovieApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormFile image, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image")] Movie movie)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && IsImage(image!))
             {
                 SaveImage(image, movie);
                 _context.Add(movie);
@@ -121,7 +121,7 @@ namespace MovieApp.Controllers
                 return NotFound();
             }
             
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && IsImage(image!))
             {
                 try
                 {
@@ -209,6 +209,17 @@ namespace MovieApp.Controllers
             {
                 System.IO.File.Delete(path);
             }
+        }
+
+        public bool IsImage(IFormFile image)
+        {
+            if (Path.GetExtension(image.FileName).ToLower() != ".jpg"
+            && Path.GetExtension(image.FileName).ToLower() != ".png"
+            && Path.GetExtension(image.FileName).ToLower() != ".jpeg")
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
