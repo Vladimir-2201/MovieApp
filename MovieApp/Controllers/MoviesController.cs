@@ -85,19 +85,7 @@ namespace MovieApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (image != null)
-                {
-                    // путь к папке Files
-                    string path = "image/" + movie.Title!.Replace(" ", "") + "Cover";
-                    string extension = Path.GetExtension(image.FileName);
-
-                    // сохраняем файл в папку Files в каталоге wwwroot
-                    using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + "/" + path + extension, FileMode.Create))
-                    {
-                        await image.CopyToAsync(fileStream);
-                        movie.Image = (path + extension);
-                    }
-                }
+                SaveImage(image, movie);
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -126,26 +114,14 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, IFormFile image, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image")] Movie movie)
+        public async Task<IActionResult> Edit(IFormFile? image, int id, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image")] Movie movie)
         {
             if (id != movie.Id)
             {
                 return NotFound();
             }
 
-            if (image != null)
-            {
-                // путь к папке Files
-                string path = "image/" + movie.Title!.Replace(" ", "") + "Cover";
-                string extension = Path.GetExtension(image.FileName);
-
-                // сохраняем файл в папку Files в каталоге wwwroot
-                using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + "/" + path + extension, FileMode.Create))
-                {
-                    await image.CopyToAsync(fileStream);
-                    movie.Image = (path + extension);
-                }
-            }
+            SaveImage(image, movie);
 
             if (ModelState.IsValid)
             {
@@ -210,6 +186,21 @@ namespace MovieApp.Controllers
         private bool MovieExists(int id)
         {
           return (_context.Movie?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        internal async void SaveImage(IFormFile? image, Movie movie)
+        {
+            if (image != null)
+            {
+                string path = "image/" + movie.Title!.Replace(" ", "") + "Cover";
+                string extension = Path.GetExtension(image.FileName);
+
+                using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + "/" + path + extension, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                    movie.Image = (path + extension);
+                }
+            }
         }
     }
 }
