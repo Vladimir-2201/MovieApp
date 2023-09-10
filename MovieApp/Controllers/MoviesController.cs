@@ -83,7 +83,7 @@ namespace MovieApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormFile image, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image")] Movie movie)
         {
-            if (ModelState.IsValid && IsImage(image!))
+            if (ModelState.IsValid && IsImage(image))
             {
                 SaveImage(image, movie);
                 _context.Add(movie);
@@ -197,7 +197,7 @@ namespace MovieApp.Controllers
                 using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + "/" + path, FileMode.Create))
                 {
                     await image.CopyToAsync(fileStream);
-                    movie.Image = (path);
+                    movie.Image = path;
                 }
             }
         }
@@ -211,13 +211,17 @@ namespace MovieApp.Controllers
             }
         }
 
-        public bool IsImage(IFormFile image)
+        public bool IsImage(IFormFile? image)
         {
-            if (Path.GetExtension(image.FileName).ToLower() != ".jpg"
-            && Path.GetExtension(image.FileName).ToLower() != ".png"
-            && Path.GetExtension(image.FileName).ToLower() != ".jpeg")
+            if (image != null)
             {
-                return false;
+                string extension = Path.GetExtension(image!.FileName).ToLower();
+                if (extension != ".jpg"
+                && extension != ".png"
+                && extension != ".jpeg")
+                {
+                    return false;
+                }
             }
             return true;
         }
