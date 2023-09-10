@@ -120,13 +120,12 @@ namespace MovieApp.Controllers
             {
                 return NotFound();
             }
-
-            SaveImage(image, movie);
-
+            
             if (ModelState.IsValid)
             {
                 try
                 {
+                    SaveImage(image, movie);
                     _context.Update(movie);
                     await _context.SaveChangesAsync();
                 }
@@ -176,6 +175,7 @@ namespace MovieApp.Controllers
             var movie = await _context.Movie.FindAsync(id);
             if (movie != null)
             {
+                DeleteImage(movie);
                 _context.Movie.Remove(movie);
             }
             
@@ -188,18 +188,26 @@ namespace MovieApp.Controllers
           return (_context.Movie?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        internal async void SaveImage(IFormFile? image, Movie movie)
+        public async void SaveImage(IFormFile? image, Movie movie)
         {
             if (image != null)
             {
-                string path = "image/" + movie.Title!.Replace(" ", "") + "Cover";
-                string extension = Path.GetExtension(image.FileName);
-
-                using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + "/" + path + extension, FileMode.Create))
+                DeleteImage(movie);
+                string path = "image/" + movie.Title!.Replace(" ", "") + "Cover" + Path.GetExtension(image.FileName);
+                using (var fileStream = new FileStream(_webHostEnvironment.WebRootPath + "/" + path, FileMode.Create))
                 {
                     await image.CopyToAsync(fileStream);
-                    movie.Image = (path + extension);
+                    movie.Image = (path);
                 }
+            }
+        }
+
+        public void DeleteImage(Movie movie)
+        {
+            string path = _webHostEnvironment.WebRootPath + "/" + movie.Image;
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
             }
         }
     }
