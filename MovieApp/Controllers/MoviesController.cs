@@ -215,10 +215,9 @@ namespace MovieApp.Controllers
         {
             if (image != null)
             {
-                string extension = Path.GetExtension(image!.FileName).ToLower();
-                if (extension != ".jpg"
-                && extension != ".png"
-                && extension != ".jpeg")
+                if (!string.Equals(image.ContentType, "image/jpg", StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(image.ContentType, "image/png", StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(image.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
