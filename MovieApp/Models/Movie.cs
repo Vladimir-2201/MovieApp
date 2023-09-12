@@ -28,5 +28,7 @@ namespace MovieApp.Models
         //[RegularExpression(@"jpg$")]
         public string? Image { get; set; }
         public string? Trailer { get; set; }
+        public string? Description { get; set; }
+        public string? Director { get; set; }
     }
 }

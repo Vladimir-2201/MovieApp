@@ -17,9 +17,15 @@
                 </div>
                 <div class="col-md-7">
                     <div class="card-body text-center">
-                        <h5 class="card-title">@Html.DisplayFor(model => model.Title)</h5>
+                        <h5 class="card-title border-bottom">@Html.DisplayFor(model => model.Title)</h5>
                         <div class="card-text">
                             <dl class="row">
+                                <dt class="col-sm-5">
+                                    @Html.DisplayNameFor(model => model.Director)
+                                </dt>
+                                <dd class="col-sm-5">
+                                    @Html.DisplayFor(model => model.Director)
+                                </dd>
                                 <dt class="col-sm-5">
                                     @Html.DisplayNameFor(model => model.ReleaseDate)
                                 </dt>
@@ -45,6 +51,7 @@
                                     @Html.DisplayFor(model => model.Rating)
                                 </dd>
                             </dl>
+                            <div class="border-top">@Html.DisplayFor(model => model.Description)</div>
                         </div>
                     </div>
                 </div>
