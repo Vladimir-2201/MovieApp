@@ -81,11 +81,12 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile image, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image")] Movie movie)
+        public async Task<IActionResult> Create(IFormFile image, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image,Trailer")] Movie movie)
         {
             if (ModelState.IsValid && IsImage(image))
             {
                 SaveImage(image, movie);
+                TrailerUrl(movie);
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -114,7 +115,7 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(IFormFile? image, int id, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image")] Movie movie)
+        public async Task<IActionResult> Edit(IFormFile? image, int id, [Bind("Id,Title,ReleaseDate,Genre,Imdb,Rating,Image,Trailer")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -126,6 +127,7 @@ namespace MovieApp.Controllers
                 try
                 {
                     SaveImage(image, movie);
+                    TrailerUrl(movie);
                     _context.Update(movie);
                     await _context.SaveChangesAsync();
                 }
@@ -223,6 +225,24 @@ namespace MovieApp.Controllers
                 }
             }
             return true;
+        }
+
+        public void TrailerUrl(Movie movie)
+        {
+            if (movie.Trailer != null)
+            {
+                string trailerUrl = movie.Trailer!.Replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
+                try
+                {
+                    trailerUrl = trailerUrl.Remove(trailerUrl.IndexOf("&"), (trailerUrl.Length) - (trailerUrl.IndexOf("&")));
+                    movie.Trailer = trailerUrl;
+                }
+                catch
+                {
+                    movie.Trailer = trailerUrl;
+                }
+            }
+            
         }
     }
 }

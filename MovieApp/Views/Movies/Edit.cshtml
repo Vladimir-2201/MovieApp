@@ -45,7 +45,11 @@
                 <input type="file" accept=".jpeg,.jpg,.png" asp-for="Image" class="form-control" />
                 @* <span asp-validation-for="Image" class="text-danger"></span> *@
             </div>
-            @* <iframe width="560" height="315" src="https://www.youtube.com/embed/I4xmX4SBm7M?si=Ux_dldFQnWcJbr0K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> *@
+            <div class="mb-3">
+                <label asp-for="Trailer" class="control-label"></label>
+                <input asp-for="Trailer" class="form-control" id="TrailerUrl" />
+                <span asp-validation-for="Trailer" class="text-danger"></span>
+            </div>
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
