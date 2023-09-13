@@ -13,11 +13,11 @@
         <div class="card border-light mb-3" style="max-width: 560px;">
             <div class="row g-0">
                 <div class="col-md-5">
-                    <img src="../../@Html.DisplayFor(model => model.Image)" class="figure-img img-fluid">
+                    <img src="../../@Html.DisplayFor(model => model.Image)" class="figure-img img-fluid" style="height:100%; width:100%">
                 </div>
                 <div class="col-md-7">
                     <div class="card-body">
-                        <h5 class="card-title border-bottom">@Html.DisplayFor(model => model.Title)</h5>
+                        <h5 class="card-title border-bottom text-center">@Html.DisplayFor(model => model.Title)</h5>
                         <div class="card-text">
                             <dl class="row">
                                 <dt class="col-sm-5">
@@ -51,25 +51,16 @@
                                     @Html.DisplayFor(model => model.Rating)
                                 </dd>
                             </dl>
-                            <div class="border-top">@Html.DisplayFor(model => model.Description)</div>
+                            <div class="border-top text-center">@Html.DisplayFor(model => model.Description)</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card border-light" style="max-width: 560px;">
-            <div class="row g-0">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <div class="card-text">
-                            <iframe width="560" height="315" src="@Html.DisplayFor(model => model.Trailer)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <iframe style="width:100%; height:100%" src="@Html.DisplayFor(model => model.Trailer)" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
     </div>
-        
 </div>
 
 <div>
