@@ -11,7 +11,7 @@
 </p>
 <form asp-controller="Movies" asp-action="Index" method="get" class="row ms-auto">
     <div class="col-auto">
-        <select class="form-select" asp-for="MovieGenre" asp-items="Model.Genres">
+        <select class="form-select" asp-for="MovieGenre" asp-items="Model.Genres" onchange="this.form.submit()">
             <option value="">All</option>
         </select>
     </div>
