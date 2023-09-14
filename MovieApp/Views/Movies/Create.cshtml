@@ -21,7 +21,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <button class="btn btn-secondary" onclick="location.href='@Url.RouteUrl(new { controller = "Movies", action = "Index" })'">Back to List</button>
 </div>
 
 @section Scripts {

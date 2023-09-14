@@ -24,8 +24,6 @@ namespace MovieApp.Models
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$"), StringLength(5)]
         public string? Rating { get; set; }
-
-        //[RegularExpression(@"jpg$")]
         public string? Image { get; set; }
         public string? Trailer { get; set; }
         public string? Description { get; set; }
