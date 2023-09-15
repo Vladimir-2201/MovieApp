@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Formats.Tar;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using MovieApp.Data;
 using MovieApp.Models;
 
