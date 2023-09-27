@@ -7,6 +7,7 @@ namespace MovieApp.Data
         public MovieAppContext (DbContextOptions<MovieAppContext> options)
             : base(options)
         {
+            Database.Migrate();
         }
 
         public DbSet<MovieApp.Models.Movie> Movie { get; set; } = default!;
