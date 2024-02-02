@@ -3,11 +3,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieApp.Data;
 using MovieApp.Models;
+using System.Diagnostics;
 
 namespace MovieApp.Controllers;
 
 public class MoviesController(MovieAppContext context, IWebHostEnvironment webHostEnvironment) : Controller
 {
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
     // GET: Movies
     public async Task<IActionResult> Index(string movieGenre, string searchString)
     {
