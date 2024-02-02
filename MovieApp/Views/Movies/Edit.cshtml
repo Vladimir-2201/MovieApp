@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Image" />
-            
+
             @await Html.PartialAsync("Template")
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -29,5 +29,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

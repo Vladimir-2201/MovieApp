@@ -46,34 +46,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Movies!) {
+        @foreach (var item in Model.Movies!)
+        {
             <tr class="text-center align-middle">
-            <td class="col-3">
-                <figure class="figure">
-                    <img src="@Html.DisplayFor(modelItem => item.Image)" class="figure-img img-fluid">
-                </figure>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imdb)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
+                <td class="col-3">
+                    <figure class="figure">
+                        <img src="@Html.DisplayFor(modelItem => item.Image)" class="figure-img img-fluid">
+                    </figure>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Director)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Imdb)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
                     <button class="btn btn-warning" onclick="location.href='@Url.RouteUrl(new { controller = "Movies", action = "Edit", id = item.Id })'">Edit</button>
                     <button class="btn btn-info" onclick="location.href='@Url.RouteUrl(new { controller = "Movies", action = "Details", id = item.Id })'">Details</button>
                     <button class="btn btn-danger" onclick="location.href='@Url.RouteUrl(new { controller = "Movies", action = "Delete", id = item.Id })'">Delete</button>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
