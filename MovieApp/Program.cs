@@ -29,4 +29,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Movies}/{action=Index}/{id?}");
 
+string path = app.Environment.WebRootPath + "\\image";
+if (!Directory.Exists(path))
+    Directory.CreateDirectory(path);
+
 app.Run();
