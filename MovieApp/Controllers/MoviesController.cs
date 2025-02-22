@@ -198,7 +198,7 @@ public class MoviesController(MovieAppContext context, IWebHostEnvironment webHo
             string trailerUrl = movie.Trailer!.Replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
             try
             {
-                trailerUrl = trailerUrl.Remove(trailerUrl.IndexOf('&'), trailerUrl.Length - trailerUrl.IndexOf('&'));
+                trailerUrl = trailerUrl[..trailerUrl.IndexOf('&')];
                 movie.Trailer = trailerUrl;
             }
             catch
